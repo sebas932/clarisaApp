@@ -7,7 +7,7 @@ import { InnovationsPageComponent } from './pages/innovations-page/innovations-p
 const routes: Routes = [
   { path: '', component: HomePageComponent },
   { path: 'home', component: HomePageComponent },
-  { path: 'innovations', component: InnovationsPageComponent }
+  { path: 'innovations/:entityAcronym', component: InnovationsPageComponent }
 
 ];
 

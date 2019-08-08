@@ -1,3 +1,7 @@
-  <ul>
-    <li *ngFor="let entity of cgiarEntities"> {{ entity }}</li>
-  </ul>
+
+
+<ul class="list-group">
+  <li class="list-group-item" *ngFor="let entity of cgiarEntities">
+    <a [routerLink]="['/innovations', entity.acronym]" ><code>{{ entity.code }}</code> {{ entity.name }}</a> 
+  </li>
+</ul>
