@@ -1,0 +1,7 @@
+{
+  "/api/*": {
+    "target": "https://clarisa.cgiar.org",
+    "secure": false,
+    "changeOrigin": true,
+  }
+}

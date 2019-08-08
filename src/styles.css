@@ -1,1 +1,22 @@
-/* You can add global styles to this file, and also import other style files */
+nav {
+  color: #444;
+  background-color: #fff;
+}
+
+nav .brand-logo {
+  color: #444;
+}
+
+nav a {
+  color: #444;
+}
+
+nav ul a {
+  color: #444;
+}
+
+
+.page-footer {
+  color: #444;
+  background-color: #fbfbfb;
+}
