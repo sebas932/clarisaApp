@@ -12,6 +12,8 @@ export class HomePageComponent implements OnInit {
 
   cgiarEntities:any = [];
 
+  innovation:any;
+
   constructor(
     private _clarisaService: ClarisaServiceService,
     private activatedRoute: ActivatedRoute
@@ -23,6 +25,12 @@ export class HomePageComponent implements OnInit {
   }
 
   ngOnInit() {
+
+
+
+    this._clarisaService.getInnovationByID().subscribe((data:any) => {
+      console.log(data.result);
+    });
 
     this._clarisaService.getCgiarEntities().subscribe((data:any) => {
       this.cgiarEntities = data.result;

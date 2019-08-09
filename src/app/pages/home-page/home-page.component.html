@@ -1,7 +1,26 @@
+<div class="container">
+  <div class="list-group">
+    <a href="#" class="list-group-item list-group-item-action" [routerLink]="[ entity.acronym ]" *ngFor="let entity of cgiarEntities">
+      <img class="float-right" src="https://marlo.cgiar.org/global/images/crps/{{ entity.acronym }}.png" alt="" width="150px" >
+      <h5>{{ entity.acronym }}</h5>
+      <p>{{ entity.name }} <span class="badge badge-light">{{ entity.code }}</span></p>
+    </a>
+  </div>
+</div>
 
 
-<ul class="list-group">
-  <li class="list-group-item" *ngFor="let entity of cgiarEntities">
-    <a [routerLink]="['/innovations', entity.acronym]" ><code>{{ entity.code }}</code> {{ entity.name }}</a> 
-  </li>
-</ul>
+<!--
+<div class="row">
+  <div class="col-sm-4" *ngFor="let entity of cgiarEntities">
+    <div class="card">
+      <img src="https://marlo.cgiar.org/global/images/crps/{{ entity.acronym }}.png" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">{{ entity.acronym }}</h5>
+        <h6 class="card-subtitle mb-2 text-muted">{{ entity.code }}</h6>
+        <p class="card-text">{{ entity.name }}</p>
+        <a [routerLink]="[ entity.acronym, 'innovations' ]" class="btn btn-primary">Innovations</a>
+      </div>
+    </div>
+  </div>
+</div>
+  -->

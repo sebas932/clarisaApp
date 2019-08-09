@@ -5,6 +5,7 @@ import { Observable, of } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
 
 //const endpoint = 'https://clarisa.cgiar.org/api';
+// Proxy http://localhost/issuesRoadmap/public/api/proxy/?url=
 const endpoint = 'http://localhost/issuesRoadmap/public/api/proxy/?url=http://marlodev.ciat.cgiar.org/api';
 
 
@@ -35,14 +36,18 @@ export class ClarisaServiceService {
   }
 
   postInnovation(cgiarEntity:String, innovation:any, year:number): Observable<any> {
-    //curl -X POST "http://marlodev.ciat.cgiar.org/api/CCAFS/innovations?year=2018" -H "accept: application/json" -H "Content-Type: application/json" -d "{ \"title\": \"string\", \"narrative\": \"string\", \"projectId\": 0, \"stageOfInnovation\": 0, \"descriptionStage\": \"string\", \"nextUserOrganizationTypes\": [ 0 ], \"innovationType\": 0, \"otherInnovationType\": \"string\", \"geographicScopes\": [ 0 ], \"regions\": [ 0 ], \"countries\": [ \"string\" ], \"equitativeEffort\": true, \"leadOrganization\": 0, \"contributingInstitutions\": [ 0 ], \"evidenceLink\": \"string\", \"contributingCGIAREntities\": [ \"string\" ]}"
     let endQuery = endpoint + '/'+ cgiarEntity +'/innovations?year='+ year;
     return this.http.post(endQuery, innovation, httpOptions).pipe(
       map(this.extractData));
-}
+  }
+
+  getInnovationByID(): Observable<any> {
+    return this.getQuery('CCAFS/innovations/44?phase=AR&year=2018').pipe(
+      map(this.extractData));
+  }
 
   getCgiarEntities(): Observable<any> {
-    return this.getQuery('cgiar-entities').pipe(
+    return this.getQuery('cgiar-entities?typeId=1').pipe(
       map(this.extractData));
   }
 
@@ -80,4 +85,5 @@ export class ClarisaServiceService {
     return this.getQuery('institutions').pipe(
       map(this.extractData));
   }
+
 }

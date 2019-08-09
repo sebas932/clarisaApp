@@ -23,22 +23,45 @@ export class InnovationsPageComponent implements OnInit {
   cgiarEntities:any;
 
   innovation = {
-    "title": "",
-    "narrative": "",
+    "title": "Testing in angular app",
+    "narrative": "Narrative here",
     "projectId": 1585,
-    "stageOfInnovation": -1,
-    "descriptionStage": "",
-    "nextUserOrganizationTypes": [],
-    "innovationType": -1,
+    "stageOfInnovation": "2",
+    "descriptionStage": "Description here",
+    "nextUserOrganizationTypes": [
+      "8",
+      "10"
+    ],
+    "innovationType": "3",
     "otherInnovationType": "",
-    "geographicScopes": [],
-    "regions": [],
-    "countries": [],
+    "geographicScopes": [
+      "1",
+      "2",
+      "3"
+    ],
+    "regions": [
+      "11",
+      "34",
+      "35"
+    ],
+    "countries": [
+      "212",
+      "288",
+      "352"
+    ],
     "equitativeEffort": true,
-    "leadOrganization": -1,
-    "contributingInstitutions": [],
-    "evidenceLink": "",
-    "contributingCGIAREntities": []
+    "leadOrganization": "13",
+    "contributingInstitutions": [
+      "14",
+      "15",
+      "40",
+      "41"
+    ],
+    "evidenceLink": "http://localhost:4200/RTB/innovations",
+    "contributingCGIAREntities": [
+      "CRP-21",
+      "CRP-22"
+    ]
   };
 
   constructor(
