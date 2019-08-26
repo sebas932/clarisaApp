@@ -6,7 +6,8 @@ import { map, catchError, tap } from 'rxjs/operators';
 
 //const endpoint = 'https://clarisa.cgiar.org/api';
 // Proxy http://localhost/issuesRoadmap/public/api/proxy/?url=
-const endpoint = 'http://localhost/issuesRoadmap/public/api/proxy/?url=http://marlodev.ciat.cgiar.org/api';
+const endpoint = 'http://marlodev.ciat.cgiar.org/api';
+const proxyURL = 'http://localhost/issuesRoadmap/public/api/clarisa'
 
 
 const httpOptions = {
@@ -31,13 +32,18 @@ export class ClarisaServiceService {
   }
 
   private getQuery(query:string){
-    let endQuery = endpoint+'/'+ query;
+    let endQuery = proxyURL + '/getProxy?url=' + endpoint + '/' + query;
     return this.http.get(endQuery, httpOptions);
   }
 
-  postInnovation(cgiarEntity:String, innovation:any, year:number): Observable<any> {
-    let endQuery = endpoint + '/'+ cgiarEntity +'/innovations?year='+ year;
-    return this.http.post(endQuery, innovation, httpOptions).pipe(
+  private postQuery(query:string, data:any){
+    let endQuery = proxyURL + '/postProxy?url=' + endpoint + '/' + query;
+    return this.http.post(endQuery, data, httpOptions).pipe(
+      map(this.extractData));
+  }
+
+  postInnovation(cgiarEntity:String, innovation:any): Observable<any> {
+    return this.postQuery(cgiarEntity+ '/innovations', innovation).pipe(
       map(this.extractData));
   }
 

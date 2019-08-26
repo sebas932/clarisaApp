@@ -26,12 +26,6 @@ export class HomePageComponent implements OnInit {
 
   ngOnInit() {
 
-
-
-    this._clarisaService.getInnovationByID().subscribe((data:any) => {
-      console.log(data.result);
-    });
-
     this._clarisaService.getCgiarEntities().subscribe((data:any) => {
       this.cgiarEntities = data.result;
     });

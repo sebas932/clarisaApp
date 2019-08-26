@@ -61,7 +61,11 @@ export class InnovationsPageComponent implements OnInit {
     "contributingCGIAREntities": [
       "CRP-21",
       "CRP-22"
-    ]
+    ],
+    "phase": {
+      "name": "AR",
+      "year": 2018
+    }
   };
 
   constructor(
@@ -114,7 +118,7 @@ export class InnovationsPageComponent implements OnInit {
   }
 
   save(){
-    this._clarisaService.postInnovation(this.params.entityAcronym, this.innovation, this.year).subscribe((data:any) => {
+    this._clarisaService.postInnovation(this.params.entityAcronym, this.innovation).subscribe((data:any) => {
       console.log(data);
     });
 

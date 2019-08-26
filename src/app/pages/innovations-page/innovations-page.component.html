@@ -25,6 +25,16 @@
             <label for="projectID">Project ID</label>
             <input type="text" class="form-control form-control-sm" name="projectId" [(ngModel)]="innovation.projectId">
           </div>
+          <!-- Phase Name -->
+          <div class="col">
+            <label for="">Phase Name</label>
+            <input type="text" class="form-control form-control-sm" name="phaseName" [(ngModel)]="innovation.phase.name" readonly>
+          </div>
+          <!-- Phase Year-->
+          <div class="col">
+            <label for="">Phase Year</label>
+            <input type="text" class="form-control form-control-sm" name="phaseYear" [(ngModel)]="innovation.phase.year" readonly>
+          </div>
         </div>
         <hr>
 
@@ -130,6 +140,7 @@
             <option *ngFor="let entity of cgiarEntities" value="{{ entity.code }}"> {{ entity.acronym }}</option>
           </select>
         </div>
+
 
         <button type="submit" [disabled]="innovationForm.invalid" class="btn btn-primary">Submit</button>
       </form>
