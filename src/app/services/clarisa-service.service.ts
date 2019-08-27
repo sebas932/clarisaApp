@@ -9,7 +9,6 @@ import { map, catchError, tap } from 'rxjs/operators';
 const endpoint = 'http://marlodev.ciat.cgiar.org/api';
 const proxyURL = 'http://localhost/issuesRoadmap/public/api/clarisa'
 
-
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type':  'application/json',
@@ -22,6 +21,8 @@ const httpOptions = {
 })
 export class ClarisaServiceService {
 
+  proxyActive:Boolean = true;
+
   constructor(private http: HttpClient) {
     console.log('CLARISA Service ...');
   }
@@ -32,25 +33,43 @@ export class ClarisaServiceService {
   }
 
   private getQuery(query:string){
-    let endQuery = proxyURL + '/getProxy?url=' + endpoint + '/' + query;
+    let endQuery = endpoint + '/' + query;
+    if(this.proxyActive) endQuery = proxyURL + '/getProxy?url=' + encodeURIComponent(endQuery);
     return this.http.get(endQuery, httpOptions);
   }
 
   private postQuery(query:string, data:any){
-    let endQuery = proxyURL + '/postProxy?url=' + endpoint + '/' + query;
+    let endQuery = endpoint + '/' + query;
+    if(this.proxyActive) endQuery = proxyURL + '/postProxy?url=' + encodeURIComponent(endQuery);
     return this.http.post(endQuery, data, httpOptions).pipe(
       map(this.extractData));
   }
 
-  postInnovation(cgiarEntity:String, innovation:any): Observable<any> {
+  private deteteQuery(query:string){
+    let endQuery = endpoint + '/' + query;
+    if(this.proxyActive) endQuery = proxyURL + '/deleteProxy?url=' + encodeURIComponent(endQuery);
+    return this.http.delete(endQuery , httpOptions).pipe(
+      map(this.extractData));
+  }
+
+  // Innovations
+
+  deleteInnovation(cgiarEntity:string, id:number, phaseName:string, phaseYear:number){
+    return this.deteteQuery(cgiarEntity + '/innovations/' + id + '?phase=' + phaseName + '&year=' + phaseYear).pipe(
+      map(this.extractData));
+  }
+
+  postInnovation(cgiarEntity:string, innovation:any): Observable<any> {
     return this.postQuery(cgiarEntity+ '/innovations', innovation).pipe(
       map(this.extractData));
   }
 
-  getInnovationByID(): Observable<any> {
-    return this.getQuery('CCAFS/innovations/44?phase=AR&year=2018').pipe(
+  getInnovationByID(cgiarEntity:string, id:number, phaseName:string, phaseYear:number): Observable<any> {
+    return this.getQuery(cgiarEntity + '/innovations/' + id + '?phase=' + phaseName + '&year=' + phaseYear).pipe(
       map(this.extractData));
   }
+
+  // Control Lists
 
   getCgiarEntities(): Observable<any> {
     return this.getQuery('cgiar-entities?typeId=1').pipe(

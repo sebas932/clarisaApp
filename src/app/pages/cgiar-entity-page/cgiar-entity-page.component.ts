@@ -1,17 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
+import { faPen, faTrash, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { ClarisaServiceService } from '../../services/clarisa-service.service';
+
 @Component({
   selector: 'app-cgiar-entity-page',
   templateUrl: './cgiar-entity-page.component.html',
   styleUrls: ['./cgiar-entity-page.component.css']
 })
 export class CgiarEntityPageComponent implements OnInit {
+  faPen = faPen;
+  faTrash = faTrash;
+  faPlus = faPlus;
 
   params:any;
+  innovationID:number;
 
   constructor(
-    private activatedRoute: ActivatedRoute
+    private _clarisaService: ClarisaServiceService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router
   ) {
     // Parameters
     this.activatedRoute.params.subscribe( params => {
@@ -22,6 +31,20 @@ export class CgiarEntityPageComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  editInnovation(){
+    if(this.innovationID){
+      this.router.navigate([this.params.entityAcronym ,'innovation', this.innovationID]);
+    }
+  }
+
+  removeInnovation(){
+    if(this.innovationID){
+      this._clarisaService.deleteInnovation(this.params.entityAcronym, this.innovationID, "AR", 2018 ).subscribe((data:any) => {
+        console.log(data);
+      });
+    }
   }
 
 }

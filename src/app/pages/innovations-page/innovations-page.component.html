@@ -1,8 +1,9 @@
 <div class="container">
   <a class="btn btn-secondary" [routerLink]="[ '/', params.entityAcronym ]">Go back</a>
+  <img class="float-right" src="https://marlo.cgiar.org/global/images/crps/{{ params.entityAcronym }}.png" alt="" width="120px" >
 </div>
 
-
+<hr>
 
 <div class="container">
   <div class="card">
@@ -15,16 +16,6 @@
             <label for="projectID">CGIAR Entity</label>
             <input type="text" class="form-control form-control-sm" value="{{ params.entityAcronym }}" readonly>
           </div>
-          <!-- Year-->
-          <div class="col">
-            <label for="year">Year</label>
-            <input type="text" class="form-control form-control-sm" name="Year" [(ngModel)]="year" readonly>
-          </div>
-          <!-- Project ID -->
-          <div class="col">
-            <label for="projectID">Project ID</label>
-            <input type="text" class="form-control form-control-sm" name="projectId" [(ngModel)]="innovation.projectId">
-          </div>
           <!-- Phase Name -->
           <div class="col">
             <label for="">Phase Name</label>
@@ -34,6 +25,11 @@
           <div class="col">
             <label for="">Phase Year</label>
             <input type="text" class="form-control form-control-sm" name="phaseYear" [(ngModel)]="innovation.phase.year" readonly>
+          </div>
+          <!-- Project ID -->
+          <div class="col">
+            <label for="projectID">Project ID</label>
+            <input type="text" class="form-control form-control-sm" name="projectId" [(ngModel)]="innovation.projectId">
           </div>
         </div>
         <hr>

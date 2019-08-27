@@ -1,16 +1,36 @@
 <div class="container">
   <a class="btn btn-secondary" [routerLink]="[ '/' ]">Go back</a>
+  <img class="float-right" src="https://marlo.cgiar.org/global/images/crps/{{ params.entityAcronym }}.png" alt="" width="120px" >
 </div>
 
+<hr>
 
 
 <div class="container">
-  <div class="card" style="width: 18rem;">
+  <div class="card">
     <div class="card-body">
       <h5 class="card-title">Innovations</h5>
       <h6 class="card-subtitle mb-2 text-muted"></h6>
       <p class="card-text"></p>
-      <a  [routerLink]="[ 'innovations' ]" class="btn btn-light btn-group-sm">Add New Innovation</a>
+
+      <form class="form-inline">
+        <div class="form-group mb-2">
+          <!-- Create  -->
+          <a [routerLink]="[ 'addInnovation' ]" class="btn btn-outline-success btn-group-sm"> <fa-icon [icon]="faPlus"></fa-icon> Create Innovation</a>
+        </div>
+        <div class="form-group mx-sm-3 mb-2">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Innovation ID" name="innovationID" [(ngModel)]="innovationID">
+            <div class="input-group-append">
+              <!-- Edit  -->
+              <button class="btn btn-outline-secondary" type="button" id="button-addon2" [disabled]="!innovationID" (click)="editInnovation()"> <fa-icon [icon]="faPen"></fa-icon>  Edit</button>
+              <!-- Remove -->
+              <button class="btn btn-outline-danger" type="button" id="button-addon2" [disabled]="!innovationID" (click)="removeInnovation()"> <fa-icon [icon]="faTrash"></fa-icon>   Remove</button>
+            </div>
+          </div>
+        </div>
+      </form>
+
     </div>
   </div>
 </div>

@@ -22,49 +22,26 @@ export class InnovationsPageComponent implements OnInit {
   institutions:any;
   cgiarEntities:any;
 
-  innovation = {
-    "title": "Testing in angular app",
-    "narrative": "Narrative here",
-    "projectId": 1585,
-    "stageOfInnovation": "2",
-    "descriptionStage": "Description here",
-    "nextUserOrganizationTypes": [
-      "8",
-      "10"
-    ],
+  innovation:any = {
+    "title": "",
+    "narrative": "",
+    "projectId": 0,
+    "stageOfInnovation": "",
+    "descriptionStage": "",
+    "nextUserOrganizationTypes": [],
     "innovationType": "3",
     "otherInnovationType": "",
-    "geographicScopes": [
-      "1",
-      "2",
-      "3"
-    ],
-    "regions": [
-      "11",
-      "34",
-      "35"
-    ],
-    "countries": [
-      "212",
-      "288",
-      "352"
-    ],
+    "geographicScopes": [],
+    "regions": [],
+    "countries": [],
     "equitativeEffort": true,
-    "leadOrganization": "13",
-    "contributingInstitutions": [
-      "14",
-      "15",
-      "40",
-      "41"
-    ],
-    "evidenceLink": "http://localhost:4200/RTB/innovations",
-    "contributingCGIAREntities": [
-      "CRP-21",
-      "CRP-22"
-    ],
+    "leadOrganization": "-1",
+    "contributingInstitutions": [],
+    "evidenceLink": "",
+    "contributingCGIAREntities": [],
     "phase": {
       "name": "AR",
-      "year": 2018
+      "year": this.year
     }
   };
 
@@ -75,12 +52,20 @@ export class InnovationsPageComponent implements OnInit {
     // Parameters
     this.activatedRoute.params.subscribe( params => {
       this.params = params;
+      console.log(params);
 
       //this.innovation.title = params.entityAcronym;
     });
   }
 
   ngOnInit() {
+    if(this.params.id){
+      this._clarisaService.getInnovationByID(this.params.entityAcronym, this.params.id, "AR", this.year).subscribe((data:any) => {
+        this.innovation.title = data.result.title;
+        console.log(data.result);
+      });
+    }
+
 
     this._clarisaService.getInnovationStages().subscribe((data:any) => {
       this.innovationStages = data.result;
@@ -121,7 +106,6 @@ export class InnovationsPageComponent implements OnInit {
     this._clarisaService.postInnovation(this.params.entityAcronym, this.innovation).subscribe((data:any) => {
       console.log(data);
     });
-
   }
 
 }

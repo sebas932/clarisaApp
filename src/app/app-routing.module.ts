@@ -9,7 +9,8 @@ const routes: Routes = [
   { path: '', component: HomePageComponent },
   { path: 'home', component: HomePageComponent },
   { path: ':entityAcronym', component: CgiarEntityPageComponent },
-  { path: ':entityAcronym/innovations', component: InnovationsPageComponent }
+  { path: ':entityAcronym/addInnovation', component: InnovationsPageComponent },
+  { path: ':entityAcronym/innovation/:id', component: InnovationsPageComponent }
 
 ];
 
