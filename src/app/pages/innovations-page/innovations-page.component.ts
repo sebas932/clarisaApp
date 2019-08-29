@@ -13,6 +13,7 @@ export class InnovationsPageComponent implements OnInit {
 
   params:any;
   year:number = 2018;
+  projectID:number = 1585;
   innovationStages:any;
   innovationTypes:any;
   orgTypes:any;
@@ -22,28 +23,27 @@ export class InnovationsPageComponent implements OnInit {
   institutions:any;
   cgiarEntities:any;
 
-  innovation:any = {
+  innovation:any ={
     "title": "",
     "narrative": "",
-    "projectId": 0,
-    "stageOfInnovation": "",
+    "projectId": this.projectID,
+    "stageOfInnovation": {},
     "descriptionStage": "",
     "nextUserOrganizationTypes": [],
-    "innovationType": "3",
+    "innovationType": {},
     "otherInnovationType": "",
     "geographicScopes": [],
     "regions": [],
     "countries": [],
     "equitativeEffort": true,
-    "leadOrganization": "-1",
+    "leadOrganization": {},
     "contributingInstitutions": [],
-    "evidenceLink": "",
+    "evidenceLink": "string",
     "contributingCGIAREntities": [],
-    "phase": {
-      "name": "AR",
-      "year": this.year
-    }
+    "phase": { "name": "AR", "year": this.year }
   };
+
+
 
   constructor(
     private _clarisaService: ClarisaServiceService,
@@ -59,13 +59,13 @@ export class InnovationsPageComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    // Load Innovation
     if(this.params.id){
       this._clarisaService.getInnovationByID(this.params.entityAcronym, this.params.id, "AR", this.year).subscribe((data:any) => {
-        this.innovation.title = data.result.title;
-        console.log(data.result);
+        this.innovation = data.result;
       });
     }
-
 
     this._clarisaService.getInnovationStages().subscribe((data:any) => {
       this.innovationStages = data.result;

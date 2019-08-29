@@ -29,7 +29,7 @@
           <!-- Project ID -->
           <div class="col">
             <label for="projectID">Project ID</label>
-            <input type="text" class="form-control form-control-sm" name="projectId" [(ngModel)]="innovation.projectId">
+            <input type="text" class="form-control form-control-sm" name="projectId" [(ngModel)]="innovation.projectId" readonly>
           </div>
         </div>
         <hr>
@@ -48,21 +48,20 @@
           <!-- Innovation Stage -->
           <div class="col">
             <label for="inputState">Innovation Stage</label>
-            <select id="inputState" class="form-control form-control-sm" name="stageOfInnovation" [(ngModel)]="innovation.stageOfInnovation">
-              <option value="-1" selected>Choose...</option>
-              <option *ngFor="let stage of innovationStages" value="{{ stage.code }}">{{ stage.name }}</option>
+            <select id="inputState" class="form-control form-control-sm" name="stageOfInnovation" [(ngModel)]="innovation.stageOfInnovation.code">
+              <option *ngFor="let stage of innovationStages" [value]="stage.code">{{ stage.name }}</option>
             </select>
           </div>
           <!-- Innovation Type -->
           <div class="col">
             <label for="inputState">Innovation Type</label>
-            <select id="inputState" class="form-control form-control-sm" name="innovationType" [(ngModel)]="innovation.innovationType">
-              <option value="-1" selected>Choose...</option>
-              <option *ngFor="let type of innovationTypes" value="{{ type.code }}">{{ type.name }}</option>
+            <select id="inputState" class="form-control form-control-sm" name="innovationType" [(ngModel)]="innovation.innovationType.code">
+              <option [value]="" selected>Choose...</option>
+              <option *ngFor="let type of innovationTypes" [value]="type.code">{{ type.name }}</option>
             </select>
           </div>
           <!-- Other Innovation Type-->
-          <div class="col" *ngIf="innovation.innovationType == 6">
+          <div class="col" *ngIf="innovation.innovationType.code == 6">
             <label for="title">Other Innovation Type</label>
             <input type="text" class="form-control form-control-sm" id="title" name="otherInnovationType" [(ngModel)]="innovation.otherInnovationType" required>
           </div>
@@ -76,7 +75,7 @@
         <div class="form-group">
           <label for="descriptionStage">Organization Type(s)</label>
           <select class="custom-select" name="nextUserOrganizationTypes" [(ngModel)]="innovation.nextUserOrganizationTypes" multiple>
-            <option *ngFor="let type of orgTypes" value="{{ type.code }}">{{ type.name }}</option>
+            <option *ngFor="let type of orgTypes" [value]="type">{{ type.name }}</option>
           </select>
         </div>
         <div class="row form-group">
@@ -84,21 +83,21 @@
           <div class="col">
             <label for="descriptionStage">Geographic Scope(s)</label>
             <select class="custom-select form-control form-control-sm" name="geographicScopes" [(ngModel)]="innovation.geographicScopes" multiple>
-              <option *ngFor="let scope of geographicScopes" value="{{ scope.code }}">{{ scope.name }}</option>
+              <option *ngFor="let scope of geographicScopes" [value]="scope">{{ scope.name }}</option>
             </select>
           </div>
           <!-- Regions -->
           <div class="col">
             <label for="descriptionStage">Regions</label>
             <select class="custom-select form-control form-control-sm" name="regions" [(ngModel)]="innovation.regions" multiple>
-              <option *ngFor="let region of regions" value="{{ region.um49Code }}">{{ region.name }}</option>
+              <option *ngFor="let region of regions" [value]="region">{{ region.name }}</option>
             </select>
           </div>
           <!-- Countries -->
           <div class="col">
             <label for="descriptionStage">Countries</label>
             <select class="custom-select form-control form-control-sm" name="countries" [(ngModel)]="innovation.countries" multiple>
-              <option *ngFor="let country of countries" value="{{ country.code }}">{{ country.name }}</option>
+              <option *ngFor="let country of countries" [value]="country">{{ country.name }}</option>
             </select>
           </div>
         </div>
@@ -112,16 +111,15 @@
         <!--   Name of lead organization/entity to take innovation to this stage:  -->
         <div class="form-group">
           <label for="inputState">Name of lead organization/entity to take innovation to this stage</label>
-          <select id="inputState" class="form-control form-control-sm" name="leadOrganization" [(ngModel)]="innovation.leadOrganization">
-            <option value="-1" selected>Choose...</option>
-            <option *ngFor="let institution of institutions" value="{{ institution.code }}">{{ institution.acronym}} - {{ institution.name }}</option>
+          <select id="inputState" class="form-control form-control-sm" name="leadOrganization" [(ngModel)]="innovation.leadOrganization.code">
+            <option *ngFor="let institution of institutions" [value]="institution.code">{{ institution.acronym}} - {{ institution.name }}</option>
           </select>
         </div>
         <!--   Names of top five contributing organizations/entities to this stage:  -->
         <div class="form-group">
           <label for="descriptionStage">Names of top five contributing organizations/entities to this stage</label>
           <select class="custom-select form-control form-control-sm" name="contributingInstitutions" [(ngModel)]="innovation.contributingInstitutions" multiple>
-            <option *ngFor="let institution of institutions" value="{{ institution.code }}">{{ institution.acronym}} - {{ institution.name }}</option>
+            <option *ngFor="let institution of institutions" [value]="institution">{{ institution.acronym}} - {{ institution.name }}</option>
           </select>
         </div>
         <!-- Evidence Link(s) -->
@@ -133,7 +131,7 @@
         <div class="form-group">
           <label for="descriptionStage">Contributing CRPs/Platforms</label>
           <select class="custom-select form-control form-control-sm" name="contributingCGIAREntities" [(ngModel)]="innovation.contributingCGIAREntities" multiple>
-            <option *ngFor="let entity of cgiarEntities" value="{{ entity.code }}"> {{ entity.acronym }}</option>
+            <option *ngFor="let entity of cgiarEntities" [value]="entity"> {{ entity.acronym }}</option>
           </select>
         </div>
 
