@@ -51,18 +51,16 @@ export class InnovationsPageComponent implements OnInit {
     if(this.params.id){
       this._clarisaService.getInnovationByID(this.params.entityAcronym, this.params.id, "AR", this.year).subscribe((data:any) => {
         this.innovation = data.result;
-        this.innovation.projectId = this.projectID;
-        this.innovation.phase = {
-          name: "AR",
-          year: this.year
-        };
+        console.log(data.result);
+        this.innovation.projectId = { id: this.projectID },
+        this.innovation.phase = { name: "AR", year: this.year };
         this.loadedData= true;
       });
     }else{
       this.innovation = {
         title: null,
         narrative: null,
-        projectId: this.projectID,
+        projectId: { id: this.projectID },
         stageOfInnovation: { code: null },
         descriptionStage: null,
         nextUserOrganizationTypes: [],
@@ -72,17 +70,19 @@ export class InnovationsPageComponent implements OnInit {
         regions: [],
         countries: [],
         equitativeEffort: true,
-        leadOrganization: {},
+        leadOrganization: { code: null },
         contributingInstitutions: [],
         evidenceLink: null,
         contributingCGIAREntities: [],
-        phase: {
-          name: "AR",
-          year: this.year
-        }
+        phase: { name: "AR", year: this.year }
       };
       this.loadedData= true;
     }
+
+  }
+
+  compareFn(object1: any, object2: any) {
+    return object1 && object2 ? object1.code === object2.code : object1 === object2;
   }
 
   prepareData() : void {
@@ -96,7 +96,6 @@ export class InnovationsPageComponent implements OnInit {
         this._clarisaService.getInstitutions(),
         this._clarisaService.getCgiarEntities()
     ).subscribe((data => {
-      console.log(data);
       this.innovationStages = data[0].result;
       this.orgTypes = data[1].result;
       this.innovationTypes = data[2].result;
@@ -105,8 +104,6 @@ export class InnovationsPageComponent implements OnInit {
       this.countries = data[5].result;
       this.institutions = data[6].result;
       this.cgiarEntities = data[7].result;
-
-
       // Load Innovation
       this.loadInnovation();
     }));

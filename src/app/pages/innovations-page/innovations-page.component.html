@@ -35,11 +35,10 @@
           <!-- Project ID -->
           <div class="col">
             <label for="projectID">Project ID</label>
-            <input type="text" class="form-control form-control-sm" name="projectId" [(ngModel)]="innovation.projectId" readonly>
+            <input type="text" class="form-control form-control-sm" name="projectId" [(ngModel)]="innovation.projectId.id" readonly>
           </div>
         </div>
         <hr>
-
         <!-- Title -->
         <div class="form-group">
           <label for="title">Innovation Title</label>
@@ -81,7 +80,7 @@
         <!-- Organization Types -->
         <div class="form-group">
           <label for="descriptionStage">Organization Type(s)</label>
-          <select class="custom-select" name="nextUserOrganizationTypes" [(ngModel)]="innovation.nextUserOrganizationTypes" multiple>
+          <select class="custom-select" name="nextUserOrganizationTypes" [compareWith]="compareFn" [(ngModel)]="innovation.nextUserOrganizationTypes" multiple>
             <option *ngFor="let type of orgTypes" [value]="type">{{ type.name }}</option>
           </select>
         </div>
@@ -89,21 +88,21 @@
           <!-- Geographic Scopes -->
           <div class="col">
             <label for="descriptionStage">Geographic Scope(s)</label>
-            <select class="custom-select form-control form-control-sm" name="geographicScopes" [(ngModel)]="innovation.geographicScopes" multiple>
+            <select class="custom-select form-control form-control-sm" name="geographicScopes" [compareWith]="compareFn" [(ngModel)]="innovation.geographicScopes" multiple>
               <option *ngFor="let scope of geographicScopes" [ngValue]="scope">{{ scope.name }}</option>
             </select>
           </div>
           <!-- Regions -->
           <div class="col">
             <label for="descriptionStage">Regions</label>
-            <select class="custom-select form-control form-control-sm" name="regions" [(ngModel)]="innovation.regions" multiple>
+            <select class="custom-select form-control form-control-sm" name="regions" [compareWith]="compareFn" [(ngModel)]="innovation.regions" multiple>
               <option *ngFor="let region of regions" [value]="region">{{ region.name }}</option>
             </select>
           </div>
           <!-- Countries -->
           <div class="col">
             <label for="descriptionStage">Countries</label>
-            <select class="custom-select form-control form-control-sm" name="countries" [(ngModel)]="innovation.countries" multiple>
+            <select class="custom-select form-control form-control-sm" name="countries" [compareWith]="compareFn" [(ngModel)]="innovation.countries" multiple>
               <option *ngFor="let country of countries" [value]="country">{{ country.name }}</option>
             </select>
           </div>
@@ -125,7 +124,7 @@
         <!--   Names of top five contributing organizations/entities to this stage:  -->
         <div class="form-group">
           <label for="descriptionStage">Names of top five contributing organizations/entities to this stage</label>
-          <select class="custom-select form-control form-control-sm" name="contributingInstitutions" [(ngModel)]="innovation.contributingInstitutions" multiple>
+          <select class="custom-select form-control form-control-sm" name="contributingInstitutions" [compareWith]="compareFn" [(ngModel)]="innovation.contributingInstitutions" multiple>
             <option *ngFor="let institution of institutions" [value]="institution">{{ institution.acronym}} - {{ institution.name }}</option>
           </select>
         </div>
@@ -137,11 +136,10 @@
         <!--  Contributing CRPs/Platforms -->
         <div class="form-group">
           <label for="descriptionStage">Contributing CRPs/Platforms</label>
-          <select class="custom-select form-control form-control-sm" name="contributingCGIAREntities" [(ngModel)]="innovation.contributingCGIAREntities" multiple>
+          <select class="custom-select form-control form-control-sm" name="contributingCGIAREntities" [compareWith]="compareFn" [(ngModel)]="innovation.contributingCGIAREntities" multiple>
             <option *ngFor="let entity of cgiarEntities" [value]="entity"> {{ entity.acronym }}</option>
           </select>
         </div>
-
 
         <button type="submit" [disabled]="innovationForm.invalid" class="btn btn-primary">Submit</button>
       </form>

@@ -15,10 +15,7 @@ export class AppComponent {
   ) {
     // Parameters
     this.activatedRoute.params.subscribe( params => {
-      console.log(this.activatedRoute.firstChild);
       this.params = params;
-      console.log('parent',this.params);
-
     });
   }
 
