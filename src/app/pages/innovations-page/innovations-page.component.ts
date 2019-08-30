@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { ClarisaServiceService } from '../../services/clarisa-service.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
+import { forkJoin } from 'rxjs';
+import { Innovation } from 'src/app/interfaces/innovation';
 
 @Component({
   selector: 'app-innovations-page',
@@ -23,27 +25,9 @@ export class InnovationsPageComponent implements OnInit {
   institutions:any;
   cgiarEntities:any;
 
-  innovation:any ={
-    "title": "",
-    "narrative": "",
-    "projectId": this.projectID,
-    "stageOfInnovation": {},
-    "descriptionStage": "",
-    "nextUserOrganizationTypes": [],
-    "innovationType": {},
-    "otherInnovationType": "",
-    "geographicScopes": [],
-    "regions": [],
-    "countries": [],
-    "equitativeEffort": true,
-    "leadOrganization": {},
-    "contributingInstitutions": [],
-    "evidenceLink": "string",
-    "contributingCGIAREntities": [],
-    "phase": { "name": "AR", "year": this.year }
-  };
+  loadedData:boolean = false;
 
-
+  innovation:Innovation;
 
   constructor(
     private _clarisaService: ClarisaServiceService,
@@ -52,54 +36,80 @@ export class InnovationsPageComponent implements OnInit {
     // Parameters
     this.activatedRoute.params.subscribe( params => {
       this.params = params;
-      console.log(params);
-
-      //this.innovation.title = params.entityAcronym;
     });
+
+    // Prepare Data
+
+    this.prepareData();
   }
 
   ngOnInit() {
 
-    // Load Innovation
+  }
+
+  loadInnovation(){
     if(this.params.id){
       this._clarisaService.getInnovationByID(this.params.entityAcronym, this.params.id, "AR", this.year).subscribe((data:any) => {
         this.innovation = data.result;
+        this.innovation.projectId = this.projectID;
+        this.innovation.phase = {
+          name: "AR",
+          year: this.year
+        };
+        this.loadedData= true;
       });
+    }else{
+      this.innovation = {
+        title: null,
+        narrative: null,
+        projectId: this.projectID,
+        stageOfInnovation: { code: null },
+        descriptionStage: null,
+        nextUserOrganizationTypes: [],
+        innovationType: { code: null },
+        otherInnovationType: null,
+        geographicScopes: [],
+        regions: [],
+        countries: [],
+        equitativeEffort: true,
+        leadOrganization: {},
+        contributingInstitutions: [],
+        evidenceLink: null,
+        contributingCGIAREntities: [],
+        phase: {
+          name: "AR",
+          year: this.year
+        }
+      };
+      this.loadedData= true;
     }
+  }
 
-    this._clarisaService.getInnovationStages().subscribe((data:any) => {
-      this.innovationStages = data.result;
-    });
-
-    this._clarisaService.getOrgTypes().subscribe((data:any) => {
-      this.orgTypes = data.result;
-    });
-
-    this._clarisaService.getInnovationTypes().subscribe((data:any) => {
-      this.innovationTypes = data.result;
-    });
-
-    this._clarisaService.getGeoScopes().subscribe((data:any) => {
-      this.geographicScopes = data.result;
-    });
-
-    this._clarisaService.getRegions().subscribe((data:any) => {
-      this.regions = data.result;
-    });
-
-    this._clarisaService.getCountries().subscribe((data:any) => {
-      this.countries = data.result;
-    });
-
-    this._clarisaService.getInstitutions().subscribe((data:any) => {
-      this.institutions = data.result;
-    });
-
-    this._clarisaService.getCgiarEntities().subscribe((data:any) => {
-      this.cgiarEntities = data.result;
-    });
+  prepareData() : void {
+    forkJoin(
+        this._clarisaService.getInnovationStages(),
+        this._clarisaService.getOrgTypes(),
+        this._clarisaService.getInnovationTypes(),
+        this._clarisaService.getGeoScopes(),
+        this._clarisaService.getRegions(),
+        this._clarisaService.getCountries(),
+        this._clarisaService.getInstitutions(),
+        this._clarisaService.getCgiarEntities()
+    ).subscribe((data => {
+      console.log(data);
+      this.innovationStages = data[0].result;
+      this.orgTypes = data[1].result;
+      this.innovationTypes = data[2].result;
+      this.geographicScopes = data[3].result;
+      this.regions = data[4].result;
+      this.countries = data[5].result;
+      this.institutions = data[6].result;
+      this.cgiarEntities = data[7].result;
 
 
+      // Load Innovation
+      this.loadInnovation();
+    }));
   }
 
   save(){

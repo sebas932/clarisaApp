@@ -6,7 +6,13 @@
 <hr>
 
 <div class="container">
-  <div class="card">
+  <div class="d-flex justify-content-center" *ngIf="!loadedData">
+    <div class="spinner-border" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+
+  <div class="card" *ngIf="loadedData">
     <div class="card-body">
       <p class="lead">Add New Innovation</p>
       <form (ngSubmit)="save()" #innovationForm="ngForm">
@@ -14,7 +20,7 @@
           <!-- CGIAR entity-->
           <div class="col">
             <label for="projectID">CGIAR Entity</label>
-            <input type="text" class="form-control form-control-sm" value="{{ params.entityAcronym }}" readonly>
+            <input type="text" class="form-control form-control-sm" [value]="params.entityAcronym" readonly>
           </div>
           <!-- Phase Name -->
           <div class="col">
@@ -46,14 +52,15 @@
         </div>
         <div class="row form-group">
           <!-- Innovation Stage -->
-          <div class="col">
+          <div class="col" *ngIf="innovation.stageOfInnovation">
             <label for="inputState">Innovation Stage</label>
             <select id="inputState" class="form-control form-control-sm" name="stageOfInnovation" [(ngModel)]="innovation.stageOfInnovation.code">
+              <option [value]="" selected>Choose...</option>
               <option *ngFor="let stage of innovationStages" [value]="stage.code">{{ stage.name }}</option>
             </select>
           </div>
           <!-- Innovation Type -->
-          <div class="col">
+          <div class="col" *ngIf="innovation.innovationType">
             <label for="inputState">Innovation Type</label>
             <select id="inputState" class="form-control form-control-sm" name="innovationType" [(ngModel)]="innovation.innovationType.code">
               <option [value]="" selected>Choose...</option>
@@ -61,7 +68,7 @@
             </select>
           </div>
           <!-- Other Innovation Type-->
-          <div class="col" *ngIf="innovation.innovationType.code == 6">
+          <div class="col" *ngIf="innovation.innovationType && innovation.innovationType.code == 6">
             <label for="title">Other Innovation Type</label>
             <input type="text" class="form-control form-control-sm" id="title" name="otherInnovationType" [(ngModel)]="innovation.otherInnovationType" required>
           </div>
@@ -83,7 +90,7 @@
           <div class="col">
             <label for="descriptionStage">Geographic Scope(s)</label>
             <select class="custom-select form-control form-control-sm" name="geographicScopes" [(ngModel)]="innovation.geographicScopes" multiple>
-              <option *ngFor="let scope of geographicScopes" [value]="scope">{{ scope.name }}</option>
+              <option *ngFor="let scope of geographicScopes" [ngValue]="scope">{{ scope.name }}</option>
             </select>
           </div>
           <!-- Regions -->
@@ -109,7 +116,7 @@
           </div>
         </div>
         <!--   Name of lead organization/entity to take innovation to this stage:  -->
-        <div class="form-group">
+        <div class="form-group" *ngIf="innovation.leadOrganization">
           <label for="inputState">Name of lead organization/entity to take innovation to this stage</label>
           <select id="inputState" class="form-control form-control-sm" name="leadOrganization" [(ngModel)]="innovation.leadOrganization.code">
             <option *ngFor="let institution of institutions" [value]="institution.code">{{ institution.acronym}} - {{ institution.name }}</option>
