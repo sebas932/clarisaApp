@@ -15,7 +15,7 @@
   <div class="card" *ngIf="loadedData">
     <div class="card-body">
       <p class="lead">Add New Innovation</p>
-      <form (ngSubmit)="save()" #innovationForm="ngForm">
+      <form (ngSubmit)="submit()" #innovationForm="ngForm">
         <div class="row form-group">
           <!-- CGIAR entity-->
           <div class="col">
@@ -141,7 +141,10 @@
           </select>
         </div>
 
-        <button type="submit" [disabled]="innovationForm.invalid" class="btn btn-primary">Submit</button>
+        <button type="submit" [disabled]="innovationForm.invalid" class="btn btn-primary">
+          <span *ngIf="innovation.id">Update</span>
+          <span *ngIf="!innovation.id">Create</span>
+        </button>
       </form>
 
       <hr>

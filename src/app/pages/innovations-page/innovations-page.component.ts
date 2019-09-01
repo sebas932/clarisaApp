@@ -109,8 +109,22 @@ export class InnovationsPageComponent implements OnInit {
     }));
   }
 
+  submit(){
+    if(this.innovation.id){
+      this.update();
+    }else{
+      this.save();
+    }
+  }
+
   save(){
-    this._clarisaService.postInnovation(this.params.entityAcronym, this.innovation).subscribe((data:any) => {
+    this._clarisaService.createInnovation(this.params.entityAcronym, this.innovation).subscribe((data:any) => {
+      console.log(data);
+    });
+  }
+
+  update(){
+    this._clarisaService.updateInnovation(this.params.entityAcronym, this.innovation).subscribe((data:any) => {
       console.log(data);
     });
   }

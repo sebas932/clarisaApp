@@ -46,6 +46,13 @@ export class ClarisaServiceService {
       map(this.extractData));
   }
 
+  private putQuery(query:string, data:any){
+    let endQuery = endpoint + '/' + query;
+    if(this.proxyActive) endQuery = proxyURL + '/putProxy?url=' + encodeURIComponent(endQuery);
+    return this.http.put(endQuery, data, httpOptions).pipe(
+      map(this.extractData));
+  }
+
   private deteteQuery(query:string){
     let endQuery = endpoint + '/' + query;
     if(this.proxyActive) endQuery = proxyURL + '/deleteProxy?url=' + encodeURIComponent(endQuery);
@@ -60,8 +67,13 @@ export class ClarisaServiceService {
       map(this.extractData));
   }
 
-  postInnovation(cgiarEntity:string, innovation:any): Observable<any> {
-    return this.postQuery(cgiarEntity+ '/innovations', innovation).pipe(
+  createInnovation(cgiarEntity:string, innovation:any): Observable<any> {
+    return this.postQuery(cgiarEntity + '/innovations', innovation).pipe(
+      map(this.extractData));
+  }
+
+  updateInnovation(cgiarEntity:string, innovation:any): Observable<any> {
+    return this.putQuery(cgiarEntity + '/innovations?id=' + innovation.id, innovation).pipe(
       map(this.extractData));
   }
 
