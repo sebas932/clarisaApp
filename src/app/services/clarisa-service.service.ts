@@ -89,6 +89,12 @@ export class ClarisaServiceService {
       map(this.extractData));
   }
 
+  // Publications
+  createPublication(cgiarEntity:string, publication:any): Observable<any>{
+    return this.postQuery(cgiarEntity + '/deliverables', publication).pipe(
+      map(this.extractData));
+  }
+
   // Control Lists
 
   getCgiarEntities(): Observable<any> {

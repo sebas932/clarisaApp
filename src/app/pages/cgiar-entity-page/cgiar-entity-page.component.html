@@ -42,8 +42,33 @@
       <h5 class="card-title">Publications</h5>
       <h6 class="card-subtitle mb-2 text-muted"></h6>
       <p class="card-text"></p>
-      <form class="form-inline">
 
+      <div *ngIf="publications" class="publicationsList">
+        <table class="table table-sm">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Title</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let publication of publications">
+              <td>{{ publication.id }}</td>
+              <td>{{ publication.title }}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <button class="btn btn-outline-success" type="button" (click)="uploadPublications()">  Upload Publications </button>
+      </div>
+
+
+      <form class="">
+        <div class="form-group">
+          <label for="publicationsData">JSON Data</label>
+          <textarea class="form-control" name="publicationsData" rows="8" [(ngModel)]="publicationsData"></textarea>
+        </div>
+        <button class="btn btn-outline-primary" type="button" [disabled]="!publicationsData" (click)="loadPublicationsData()">  Load Publications </button>
       </form>
     </div>
   </div>
