@@ -4,9 +4,13 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { Observable, of } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
 
-//const endpoint = 'https://clarisa.cgiar.org/api';
+// const endpoint = 'https://clarisa.cgiar.org/api';
 // Proxy http://localhost/issuesRoadmap/public/api/proxy/?url=
+// https://172.22.42.118:8443/marlo-web/api/index.html#/
+// http://marlodev.ciat.cgiar.org/api
+// https://172.22.42.118:8443/marlo-web/api
 const endpoint = 'http://marlodev.ciat.cgiar.org/api';
+// Proxy
 const proxyURL = 'http://localhost/issuesRoadmap/public/api/clarisa'
 
 const httpOptions = {
@@ -73,7 +77,10 @@ export class ClarisaServiceService {
   }
 
   updateInnovation(cgiarEntity:string, innovation:any): Observable<any> {
-    return this.putQuery(cgiarEntity + '/innovations?id=' + innovation.id, innovation).pipe(
+    let innID = innovation.id;
+    let inn = innovation;
+    //delete inn.id;
+    return this.putQuery(cgiarEntity + '/innovations/' + innID, inn).pipe(
       map(this.extractData));
   }
 

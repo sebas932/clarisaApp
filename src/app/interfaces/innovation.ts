@@ -2,7 +2,7 @@ export interface Innovation {
   id?: number
   title?: string,
   narrative?: string,
-  projectId?: { id?: number },
+  project?: { id?: number },
   stageOfInnovation?: { code?: number },
   descriptionStage?: string,
   nextUserOrganizationTypes?: [],

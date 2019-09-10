@@ -52,15 +52,15 @@ export class InnovationsPageComponent implements OnInit {
       this._clarisaService.getInnovationByID(this.params.entityAcronym, this.params.id, "AR", this.year).subscribe((data:any) => {
         this.innovation = data.result;
         console.log(data.result);
-        this.innovation.projectId = { id: this.projectID },
-        this.innovation.phase = { name: "AR", year: this.year };
+        //this.innovation.project = { id: this.projectID },
+        //this.innovation.phase = { name: "AR", year: this.year };
         this.loadedData= true;
       });
     }else{
       this.innovation = {
         title: null,
         narrative: null,
-        projectId: { id: this.projectID },
+        project: { id: this.projectID },
         stageOfInnovation: { code: null },
         descriptionStage: null,
         nextUserOrganizationTypes: [],
@@ -120,6 +120,7 @@ export class InnovationsPageComponent implements OnInit {
   save(){
     this._clarisaService.createInnovation(this.params.entityAcronym, this.innovation).subscribe((data:any) => {
       console.log(data);
+      //this.innovation.id = data.result;
     });
   }
 
